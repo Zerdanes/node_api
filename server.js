@@ -2,7 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const todoRoutes = require('./routes/todo');
+const actorRoutes = require('./routes/actor');
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -19,8 +19,8 @@ app.get('/', (req, res) => {
     res.json({ message: 'Hello World' });
 });
 
-// Routes "Todo"
-app.use('/api/todo', todoRoutes);
+// Routes "Actor"
+app.use('/api/actor', actorRoutes);
 
 // Fallback route
 app.use((req, res) => {

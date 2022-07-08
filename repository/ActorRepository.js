@@ -1,13 +1,13 @@
 /* eslint-disable no-console */
 /* eslint-disable func-names */
-class TodoRepository {
+class ActorRepository {
     constructor(database) {
         this.database = database;
     }
 
     list() {
         return new Promise((resolve, reject) => {
-            this.database.all('SELECT * FROM todo', [], (err, rows) => {
+            this.database.all('SELECT * FROM actor', [], (err, rows) => {
                 if (err) {
                     console.error(err.message);
                     reject(err);
@@ -22,7 +22,7 @@ class TodoRepository {
 
     get(id) {
         return new Promise((resolve, reject) => {
-            this.database.get('SELECT * FROM todo WHERE id = ?', [id], (err, row) => {
+            this.database.get('SELECT * FROM actor WHERE id = ?', [id], (err, row) => {
                 if (err) {
                     console.error(err.message);
                     reject(err);
@@ -38,7 +38,7 @@ class TodoRepository {
     create(data) {
         return new Promise((resolve, reject) => {
             this.database.run(
-                'INSERT INTO todo (contents, done) VALUES (?,?)',
+                'INSERT INTO actor (contents, done) VALUES (?,?)',
                 [data.contents, data.done ? 1 : 0],
                 function (err) {
                     if (err) {
@@ -55,7 +55,7 @@ class TodoRepository {
     update(id, data) {
         return new Promise((resolve, reject) => {
             this.database.run(
-                `UPDATE todo
+                `UPDATE actor
                  SET contents = ?,
                      done = ?
                  WHERE id = ?`,
@@ -75,7 +75,7 @@ class TodoRepository {
     delete(id) {
         return new Promise((resolve, reject) => {
             this.database.run(
-                `DELETE FROM todo
+                `DELETE FROM actor
                  WHERE id = ?`,
                 [id],
                 (err) => {
@@ -91,12 +91,12 @@ class TodoRepository {
     }
 
     // eslint-disable-next-line class-methods-use-this
-    decorator(todo) {
+    decorator(actor) {
         return {
-            ...todo,
-            done: todo.done === 1,
+            ...actor,
+            done: actor.done === 1,
         };
     }
 }
 
-module.exports = TodoRepository;
+module.exports = ActorRepository;

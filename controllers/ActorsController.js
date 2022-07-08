@@ -66,7 +66,7 @@ exports.actor_create = (req, res) => {
 exports.actor_update = (req, res) => {
     const errors = [];
     ['contents', 'done'].forEach((field) => {
-        if (!req.body[field]) {
+        if (!req.body.hasOwnProperty[field]) {
             errors.push(`Field '${field}' is missing from request body`);
         }
     });

@@ -1,5 +1,5 @@
 const express = require('express');
-const actorController = require('../controllers/ActorController');
+const actorController = require('../controllers/ActorsController');
 
 const router = express.Router();
 

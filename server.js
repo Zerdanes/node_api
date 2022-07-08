@@ -2,7 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const actorRoutes = require('./routes/actor');
+const actorRoutes = require('./routes/actors');
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -19,8 +19,8 @@ app.get('/', (req, res) => {
     res.json({ message: 'Hello World' });
 });
 
-// Routes "Actor"
-app.use('/api/actor', actorRoutes);
+// Routes "Actors"
+app.use('/api/actors', actorRoutes);
 
 // Fallback route
 app.use((req, res) => {

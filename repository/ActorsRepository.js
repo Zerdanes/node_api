@@ -7,7 +7,7 @@ class ActorRepository {
 
     list() {
         return new Promise((resolve, reject) => {
-            this.database.all('SELECT * FROM actor', [], (err, rows) => {
+            this.database.all('SELECT * FROM actors', [], (err, rows) => {
                 if (err) {
                     console.error(err.message);
                     reject(err);
@@ -22,7 +22,7 @@ class ActorRepository {
 
     get(id) {
         return new Promise((resolve, reject) => {
-            this.database.get('SELECT * FROM actor WHERE id = ?', [id], (err, row) => {
+            this.database.get('SELECT * FROM actors WHERE id = ?', [id], (err, row) => {
                 if (err) {
                     console.error(err.message);
                     reject(err);
@@ -38,7 +38,7 @@ class ActorRepository {
     create(data) {
         return new Promise((resolve, reject) => {
             this.database.run(
-                'INSERT INTO actor (contents, done) VALUES (?,?)',
+                'INSERT INTO actors (contents, done) VALUES (?,?)',
                 [data.contents, data.done ? 1 : 0],
                 function (err) {
                     if (err) {
@@ -55,7 +55,7 @@ class ActorRepository {
     update(id, data) {
         return new Promise((resolve, reject) => {
             this.database.run(
-                `UPDATE actor
+                `UPDATE actors
                  SET contents = ?,
                      done = ?
                  WHERE id = ?`,
@@ -75,7 +75,7 @@ class ActorRepository {
     delete(id) {
         return new Promise((resolve, reject) => {
             this.database.run(
-                `DELETE FROM actor
+                `DELETE FROM actors
                  WHERE id = ?`,
                 [id],
                 (err) => {
@@ -91,10 +91,10 @@ class ActorRepository {
     }
 
     // eslint-disable-next-line class-methods-use-this
-    decorator(actor) {
+    decorator(actors) {
         return {
-            ...actor,
-            done: actor.done === 1,
+            ...actors,
+            done: actors.done === 1,
         };
     }
 }

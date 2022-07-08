@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const actorRoutes = require('./routes/actors');
+const genresRoutes = require('./routes/genres');
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -21,6 +22,9 @@ app.get('/', (req, res) => {
 
 // Routes "Actors"
 app.use('/api/actors', actorRoutes);
+
+// Routes "Genres"
+app.use('/api/genres', genresRoutes);
 
 // Fallback route
 app.use((req, res) => {

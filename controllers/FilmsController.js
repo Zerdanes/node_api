@@ -1,8 +1,8 @@
 const db = require('../database');
-const ActorsRepository = require('../repository/ActorsRepository');
+const FilmsRepository = require('../repository/FilmsRepository');
 
 exports.list = (req, res) => {
-    const repo = new ActorsRepository(db);
+    const repo = new FilmsRepository(db);
     repo.list()
         .then((result) => {
             res.json({
@@ -16,7 +16,7 @@ exports.list = (req, res) => {
 };
 
 exports.get = (req, res) => {
-    const repo = new ActorsRepository(db);
+    const repo = new FilmsRepository(db);
     repo.get(req.params.id)
         .then((result) => {
             res.json({
@@ -31,8 +31,8 @@ exports.get = (req, res) => {
 
 exports.create = (req, res) => {
     const errors = [];
-    ['first_name', 'last_name', 'date_of_birth', 'date_of_death'].forEach((field) => {
-        if (req.body.hasOwnProperty[field]) {
+    ['name', 'synopsis', 'release_year', 'genre_id'].forEach((field) => {
+        if (!req.body[field]) {
             errors.push(`Field '${field}' is missing from request body`);
         }
     });
@@ -44,13 +44,13 @@ exports.create = (req, res) => {
         return;
     }
 
-    const repo = new ActorsRepository(db);
+    const repo = new FilmsRepository(db);
 
     repo.create({
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        date_of_birth: req.body.date_of_birth,
-        date_of_death: req.body.date_of_death
+        name: req.body.name,
+        synopsis: req.body.synopsis,
+        release_year: req.body.release_year,
+        genre_id: req.body.genre_id
     })
         .then((result) => {
             res
@@ -67,8 +67,8 @@ exports.create = (req, res) => {
 
 exports.update = (req, res) => {
     const errors = [];
-    ['first_name', 'last_name', 'date_of_birth', 'date_of_death'].forEach((field) => {
-        if (req.body.hasOwnProperty[field]) {
+    ['name', 'synopsis', 'release_year', 'genre_id'].forEach((field) => {
+        if (!req.body[field]) {
             errors.push(`Field '${field}' is missing from request body`);
         }
     });
@@ -80,15 +80,15 @@ exports.update = (req, res) => {
         return;
     }
 
-    const repo = new ActorsRepository(db);
+    const repo = new FilmsRepository(db);
 
     repo.update(
         req.params.id,
         {
-            first_name: req.body.first_name,
-            last_name: req.body.last_name,
-            date_of_birth: req.body.date_of_birth,
-            date_of_death: req.body.date_of_death,
+            name: req.body.name,
+            synopsis: req.body.synopsis,
+            release_year: req.body.release_year,
+            genre_id: req.body.genre_id
         },
     )
         .then(() => {
@@ -106,7 +106,7 @@ exports.update = (req, res) => {
 };
 
 exports.delete = (req, res) => {
-    const repo = new ActorsRepository(db);
+    const repo = new FilmsRepository(db);
 
     repo.delete(req.params.id)
         .then(() => {

@@ -70,10 +70,10 @@ const db = new sqlite3.Database(DBSOURCE, (errConnect) => {
 
                 } else {
                 // Table just created, creating some rows
-                    const insert = 'INSERT INTO films (name, synopsis, release_year, genre_id) VALUES (?,?,?,?)';
-                    db.run(insert, ['Fast and Furious', 'Grosses voitures', 2001, 2]);
-                    db.run(insert, ['Fast and Furious 9', 'Grosses voitures mais sans Paul Walker', 2021, 2]);
-                    db.run(insert, ['La Folie des Grandeurs', 'Il est l\'or, mon seignor', 1971, 1]);
+                    const insert = 'INSERT INTO films (id, name, synopsis, release_year, genre_id) VALUES (?,?,?,?,?)';
+                    db.run(insert, [1,'Fast and Furious', 'Grosses voitures', 2001, 2]);
+                    db.run(insert, [2, 'Fast and Furious 9', 'Grosses voitures mais sans Paul Walker', 2021, 2]);
+                    db.run(insert, [3, 'La Folie des Grandeurs', 'Il est l\'or, mon seignor', 1971, 1]);
                 }
             },
         );

@@ -13,7 +13,7 @@ class GenreRepository {
                     reject(err);
                 } else {
                     resolve(
-                        rows.map((row) => this.decorator(row)),
+                        rows,
                     );
                 }
             });
@@ -23,8 +23,8 @@ class GenreRepository {
     create(data) {
         return new Promise((resolve, reject) => {
             this.database.run(
-                'INSERT INTO genres (contents, done) VALUES (?,?)',
-                [data.contents, data.done ? 1 : 0],
+                'INSERT INTO genres (name) VALUES (?)',
+                [data.name],
                 function (err) {
                     if (err) {
                         console.error(err.message);
@@ -56,12 +56,12 @@ class GenreRepository {
     }
 
     // eslint-disable-next-line class-methods-use-this
-    decorator(genres) {
+/*decorator(genres) {
         return {
             ...genres,
             done: genres.done === 1,
         };
-    }
+    }*/
 }
 
 module.exports = GenreRepository;

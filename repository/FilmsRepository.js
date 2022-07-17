@@ -1,13 +1,13 @@
 /* eslint-disable no-console */
 /* eslint-disable func-names */
-class ActorsRepository {
+class FilmsRepository {
     constructor(database) {
         this.database = database;
     }
 
     list() {
         return new Promise((resolve, reject) => {
-            this.database.all('SELECT * FROM actors', [], (err, rows) => {
+            this.database.all('SELECT * FROM films', [], (err, rows) => {
                 if (err) {
                     console.error(err.message);
                     reject(err);
@@ -22,7 +22,7 @@ class ActorsRepository {
 
     get(id) {
         return new Promise((resolve, reject) => {
-            this.database.get('SELECT * FROM actors WHERE id = ?', [id], (err, row) => {
+            this.database.get('SELECT * FROM films WHERE id = ?', [id], (err, row) => {
                 if (err) {
                     console.error(err.message);
                     reject(err);
@@ -38,8 +38,8 @@ class ActorsRepository {
     create(data) {
         return new Promise((resolve, reject) => {
             this.database.run(
-                'INSERT INTO actors (first_name, last_name, date_of_birth, date_of_death) VALUES (?, ?, ?, ?)',
-                [data.first_name, data.last_name, data.date_of_birth, data.date_of_death],
+                'INSERT INTO films (name, synopsis, release_year, genre_id) VALUES (?,?,?,?)',
+                [data.name, data.synopsis, data.release_year, data.genre_id],
                 function (err) {
                     if (err) {
                         console.error(err.message);
@@ -55,13 +55,13 @@ class ActorsRepository {
     update(id, data) {
         return new Promise((resolve, reject) => {
             this.database.run(
-                `UPDATE actors
-                 SET first_name = ?,
-                     last_name = ?,
-                     date_of_birth = ?,
-                     date_of_death = ?
+                `UPDATE films
+                 SET name = ?,
+                     synopsis = ?,
+                     release_year = ?,
+                     genre_id = ?
                  WHERE id = ?`,
-                [data.first_name, data.last_name, data.date_of_birth, data.date_of_death, id],
+                [data.name, data.synopsis, data.release_year, data.genre_id, id],
                 (err) => {
                     if (err) {
                         console.error(err.message);
@@ -77,7 +77,7 @@ class ActorsRepository {
     delete(id) {
         return new Promise((resolve, reject) => {
             this.database.run(
-                `DELETE FROM actors
+                `DELETE FROM films
                  WHERE id = ?`,
                 [id],
                 (err) => {
@@ -101,4 +101,4 @@ class ActorsRepository {
     }*/
 }
 
-module.exports = ActorsRepository;
+module.exports = FilmsRepository;

@@ -1,8 +1,8 @@
 const db = require('../database');
-const GenreRepository = require('../repository/GenresRepository');
+const GenresRepository = require('../repository/GenresRepository');
 
-exports.genres_list = (req, res) => {
-    const repo = new GenreRepository(db);
+exports.list = (req, res) => {
+    const repo = new GenresRepository(db);
     repo.list()
         .then((result) => {
             res.json({
@@ -15,10 +15,10 @@ exports.genres_list = (req, res) => {
         });
 };
 
-exports.genres_create = (req, res) => {
+exports.create = (req, res) => {
     const errors = [];
-    ['contents', 'done'].forEach((field) => {
-        if (!req.body[field]) {
+    ['name'].forEach((field) => {
+        if (!req.body.hasOwnProperty[field]) {
             errors.push(`Field '${field}' is missing from request body`);
         }
     });
@@ -30,11 +30,10 @@ exports.genres_create = (req, res) => {
         return;
     }
 
-    const repo = new GenreRepository(db);
+    const repo = new GenresRepository(db);
 
     repo.create({
-        contents: req.body.contents,
-        done: req.body.done === 'true',
+        name: req.body.name,
     })
         .then((result) => {
             res
@@ -49,8 +48,8 @@ exports.genres_create = (req, res) => {
         });
 };
 
-exports.genres_delete = (req, res) => {
-    const repo = new GenreRepository(db);
+exports.delete = (req, res) => {
+    const repo = new GenresRepository(db);
 
     repo.delete(req.params.id)
         .then(() => {

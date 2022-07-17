@@ -5,6 +5,15 @@ const API_KEY = "8f94826adab8ffebbeadb4f9e161b2dc";
 const Routes = require('./route');
 
 const app = express();
+const requireJsonContent = () => {
+    return (req, res, next) => {
+      if (req.headers['content-type'] !== 'application/json') {
+          res.status(400).send('Server requires application/json')
+      } else {
+        next()
+      }
+    }
+  }
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -18,6 +27,10 @@ app.listen(HTTP_PORT, () => {
 app.get('/', (req, res) => {
     res.json({ message: 'Hello World' });
 });
+
+app.post('/', requireJsonContent(), (req, res, next) => {
+    res.send('You sent JSON');
+  })
 
 // Routes
 app.use('/api', Routes);
